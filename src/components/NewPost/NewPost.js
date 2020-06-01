@@ -1,28 +1,40 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 import './NewPost.css';
 
 class NewPost extends Component {
     state = {
-        title: '',
-        content: '',
-        author: 'Max'
+        name: '',
+        salary: '',
+        age: ''
     }
-
+    postDataHandler = () => {
+        let dat ={
+            name: this.state.name,
+            salary: this.state.salary,
+            age: this.state.age
+        };
+        console.log('Posting ....');
+        axios.post('http://dummy.restapiexample.com/api/v1/create',dat)
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(err =>{
+                console.log(err);
+            });
+    }
     render () {
         return (
             <div className="NewPost">
-                <h1>Add a Post</h1>
-                <label>Title</label>
-                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
-                <label>Content</label>
-                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
-                <label>Author</label>
-                <select value={this.state.author} onChange={(event) => this.setState({author: event.target.value})}>
-                    <option value="Max">Max</option>
-                    <option value="Manu">Manu</option>
-                </select>
-                <button>Add Post</button>
+                <h1>Add a Employee</h1>
+                <label>Name</label>
+                <input type="text" value={this.state.name} onChange={(event) => this.setState({name: event.target.value})} />
+                <label>Salary</label>
+                <input type="text" value={this.state.salary} onChange={(event) => this.setState({salary: event.target.value})} />
+                <label>Age</label>
+                <input type="text" value={this.state.age} onChange={(event) => this.setState({age: event.target.value})} />
+                
+                <button onClick={this.postDataHandler}>Add Post</button>
             </div>
         );
     }
