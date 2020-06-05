@@ -12,8 +12,16 @@ class FullPost extends Component {
 // This method is not called for the initial render.
     componentDidMount(){
         console.log('Inside Full Post', this.props);
+        this.loadData();
+    }
+
+    componentDidUpdate(){
+        this.loadData();
+    }
+
+    loadData = () =>{
         if(this.props.match.params.id){
-            if(!this.state.loadedPost || (this.state.loadedPost && this.props.match.params.id !== this.state.loadedPost.id)){
+            if(!this.state.loadedPost || (this.state.loadedPost && this.props.match.params.id != this.state.loadedPost.id)){
                 axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id)
                     .then(response =>{
                         this.setState({loadedPost: response.data});
@@ -22,6 +30,7 @@ class FullPost extends Component {
         
         }
     }
+
     deletePostHandler = () =>{
         console.log('Inside delete handlder');
         axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.match.params.id)
