@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link } from 'react-router-dom';
 import axios from 'axios';
 import Post from '../../../components/Post/Post';
 import './Posts.css';
@@ -32,14 +33,18 @@ class Posts extends Component{
         this.setState({selectedPostId: id});
     }
     render(){
+        console.log('Inside Posts',this.props);
         let posts = <p style={{textAlign:"center"}}>There is Something wrong!!</p>
         if(!this.state.error){
             posts = this.state.posts.map(i =>{
-                return <Post
-                         key={i.id}
+                return (
+                    <Link to={'/'+i.id} key={i.id}>
+                        <Post
                          title={i.title}
                          author={i.author} 
-                         clicked={()=>this.postSelectHandler(i.id)}/>;
+                         clicked={()=>this.postSelectHandler(i.id)}/>
+                    </Link>
+                    );
             });
         }
         return (
